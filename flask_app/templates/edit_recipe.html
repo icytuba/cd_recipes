@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Recipes - All</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light mb-4">
+        <h1 class="navbar-brand text-warning">CODING DOJO RECIPES</h1>
+        <ul class="navbar-nav ml-auto list-group-horizontal">
+            <li class="nav-item mr-2"><a href="/recipes">Back to Recipes</a></li>
+            <li class="nav-item">
+                <a href="/logout">| Log Out</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container mx-auto">
+        <h3>Edit Your Recipe: {{ recipe.name }}</h3>
+            {% with messages = get_flashed_messages(category_filter=["recipe"]) %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <p class="text-danger mb-0">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form action="/process/edit/{{ recipe.id }}" method="post" class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="name" class="col-form-label">Name</label>
+                    <input type="text" name="name" class="form-control" value="{{ recipe.name }}">
+                </div>
+                <div class="form-group">
+                    <label for="description" class="col-form-label">Description</label>
+                    <textarea name="description" cols="30" rows="3" class="form-control textarea">{{ recipe.description }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="instructions" class="col-form-label">Instructions</label>
+                    <textarea name="instructions" cols="30" rows="6" class="form-control textarea">{{ recipe.instructions }}</textarea>
+                </div>
+            </div>
+            <div class="col-6 align-center">
+                <div class="form-group">
+                    <label for="date_cooked">When did you make this?</label>
+                    <input type="date" name="date_cooked" class="form-control" value="{{ recipe.date_cooked }}">
+                </div>
+                <div class="form-group">
+                    <p>Less than 30 minutes to cook?</p>
+                    <input type="radio" name="under_30" value="1">
+                    <label for="1" class="mr-4">Yes</label>
+                    <input type="radio" name="under_30" value="0">
+                    <label for="0">No</label>
+                </div>
+                <button type="submit" class="btn btn-success offset-8 mt-xl-5">Update Recipe</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
